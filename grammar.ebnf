@@ -1,0 +1,22 @@
+    // Numbers
+    DIGIT: "0".."9"
+    INT: DIGIT+
+    SIGNED_INT: ["+"|"-"] INT
+
+    // Letters, strings
+    LCASE_LETTER: "a".."z"
+    UCASE_LETTER: "A".."Z"
+
+    LETTER: UCASE_LETTER | LCASE_LETTER
+    WORD: LETTER+
+
+    // Locations (variables)
+    CNAME: ("_"|LETTER) ("_"|LETTER|DIGIT)*
+
+    // IMP language grammar
+    num_exp : SIGNED_INT | CNAME | num_exp "+" num_exp | num_exp "-" num_exp | num_exp "*" num_exp
+    bool_exp : "true" | "false" | num_exp "==" num_exp | num_exp "<=" num_exp | "!" bool_exp | bool_exp "&&" bool_exp | bool_exp "||" bool_exp
+    command : "skip" | CNAME "=" num_exp | command ";" command | "if" bool_exp "then" command "else" command | "while" bool_exp "do" command
+
+    %import common.WS
+    %ignore WS
