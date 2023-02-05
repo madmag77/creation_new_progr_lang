@@ -33,7 +33,7 @@
         | bool_inverse
         | bool_and
         | bool_or
-        
+
     bool_true : "true"
     bool_false : "false"
     bool_comparison : num_exp "==" num_exp
