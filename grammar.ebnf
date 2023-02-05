@@ -15,13 +15,25 @@
 
     // IMP language grammar
     // math expressions
-    num_exp : SIGNED_INT | CNAME | plus_expression | minus_expression | multiply_expression
+    ?num_exp : SIGNED_INT
+        | CNAME
+        | plus_expression
+        | minus_expression
+        | multiply_expression
+
     plus_expression : num_exp "+" num_exp
     minus_expression : num_exp "-" num_exp
     multiply_expression : num_exp "*" num_exp
 
     // bool expressions
-    bool_exp : bool_true | bool_false | bool_comparison | bool_less_or_equal | bool_inverse | bool_and | bool_or
+    ?bool_exp : bool_true
+        | bool_false
+        | bool_comparison
+        | bool_less_or_equal
+        | bool_inverse
+        | bool_and
+        | bool_or
+        
     bool_true : "true"
     bool_false : "false"
     bool_comparison : num_exp "==" num_exp
@@ -31,7 +43,13 @@
     bool_or : bool_exp "||" bool_exp
 
     // command expressions
-    command : skip_command | assignment | command ";" command | command ";" | if_statement | while_statement
+    ?command : skip_command
+        | assignment
+        | command ";" command
+        | command ";"
+        | if_statement
+        | while_statement
+
     skip_command : "skip"
     assignment : CNAME "=" num_exp
     if_statement : "if" bool_exp "then" command [if_else_statement]
