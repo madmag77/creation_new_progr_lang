@@ -14,9 +14,31 @@
     CNAME: ("_"|LETTER) ("_"|LETTER|DIGIT)*
 
     // IMP language grammar
-    num_exp : SIGNED_INT | CNAME | num_exp "+" num_exp | num_exp "-" num_exp | num_exp "*" num_exp
-    bool_exp : "true" | "false" | num_exp "==" num_exp | num_exp "<=" num_exp | "!" bool_exp | bool_exp "&&" bool_exp | bool_exp "||" bool_exp
-    command : "skip" | CNAME "=" num_exp | command ";" command | "if" bool_exp "then" command "else" command | "while" bool_exp "do" command
+    // math expressions
+    num_exp : SIGNED_INT | CNAME | plus_expression | minus_expression | multiply_expression
+    plus_expression : num_exp "+" num_exp
+    minus_expression : num_exp "-" num_exp
+    multiply_expression : num_exp "*" num_exp
+
+    bool_exp : bool_true | bool_false | bool_comparison | bool_less_or_equal | bool_inverse | bool_and | bool_or
+    bool_true : "true"
+    bool_false : "false"
+    bool_comparison : num_exp "==" num_exp
+    bool_less_or_equal : num_exp "<=" num_exp
+    bool_inverse : "!" bool_exp
+    bool_and : bool_exp "&&" bool_exp
+    bool_or : bool_exp "||" bool_exp
+
+    command : skip_command | assignment | command ";" command | command ";" | if_statement | while_statement
+
+    skip_command : "skip"
+    assignment : CNAME "=" num_exp
+    if_statement : "if" bool_exp "then" command [if_else_statement]
+    if_else_statement : "else" command
+    while_statement: "while" bool_exp while_do_statement
+    while_do_statement : "do" command
+
+
 
     %import common.WS
     %ignore WS
